@@ -1,0 +1,42 @@
+@model PokerAdmin.Models.Sesiune
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Sesiune</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.OrasId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.OrasId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ClubId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ClubId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.JocId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.JocId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Jucator)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Jucator.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
