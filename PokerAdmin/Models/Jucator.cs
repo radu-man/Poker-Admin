@@ -9,6 +9,8 @@ namespace PokerAdmin.Models
 		public string Prenume { get; set; }
 		public string? Porecla { get; set; }
 
+        public string FullName => $"{Prenume} {Nume}";
+
         public ICollection<Sesiune> Sesiuni { get; set; } = new List<Sesiune>();
 
         public Jucator()

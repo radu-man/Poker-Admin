@@ -22,7 +22,7 @@ namespace PokerAdmin.Controllers
         // GET: Sesiune
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Sesiune.Include(s => s.Jucator);
+            var applicationDbContext = _context.Sesiune.Include(s => s.Club).Include(s => s.Joc).Include(s => s.Jucator).Include(s => s.Oras);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -35,7 +35,10 @@ namespace PokerAdmin.Controllers
             }
 
             var sesiune = await _context.Sesiune
+                .Include(s => s.Club)
+                .Include(s => s.Joc)
                 .Include(s => s.Jucator)
+                .Include(s => s.Oras)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (sesiune == null)
             {
@@ -48,7 +51,12 @@ namespace PokerAdmin.Controllers
         // GET: Sesiune/Create
         public IActionResult Create()
         {
-            ViewData["JucatorId"] = new SelectList(_context.Jucator, "Id", "Id");
+            Console.WriteLine("Createeeee");
+
+            ViewData["ClubId"] = new SelectList(_context.Club, "Id", "Nume");
+            ViewData["JocId"] = new SelectList(_context.Joc, "Id", "Denumire");
+            ViewData["JucatorId"] = new SelectList(_context.Jucator, "Id", "FullName");
+            ViewData["OrasId"] = new SelectList(_context.Oras, "Id", "Nume");
             return View();
         }
 
@@ -57,7 +65,7 @@ namespace PokerAdmin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,OrasId,ClubId,JocId,JucatorId")] Sesiune sesiune)
+        public async Task<IActionResult> Create([Bind("Id,OrasId,ClubId,JocId,Rezultat,JucatorId")] Sesiune sesiune)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +73,15 @@ namespace PokerAdmin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["JucatorId"] = new SelectList(_context.Jucator, "Id", "Id", sesiune.JucatorId);
+
+            Console.WriteLine(sesiune);
+            Console.WriteLine("am ajuns aici");
+
+
+            ViewData["ClubId"] = new SelectList(_context.Club, "Id", "Nume", sesiune.ClubId);
+            ViewData["JocId"] = new SelectList(_context.Joc, "Id", "Denumire", sesiune.JocId);
+            ViewData["JucatorId"] = new SelectList(_context.Jucator, "Id", "Nume", sesiune.JucatorId);
+            ViewData["OrasId"] = new SelectList(_context.Oras, "Id", "Nume", sesiune.OrasId);
             return View(sesiune);
         }
 
@@ -82,7 +98,10 @@ namespace PokerAdmin.Controllers
             {
                 return NotFound();
             }
+            ViewData["ClubId"] = new SelectList(_context.Club, "Id", "Id", sesiune.ClubId);
+            ViewData["JocId"] = new SelectList(_context.Joc, "Id", "Id", sesiune.JocId);
             ViewData["JucatorId"] = new SelectList(_context.Jucator, "Id", "Id", sesiune.JucatorId);
+            ViewData["OrasId"] = new SelectList(_context.Oras, "Id", "Id", sesiune.OrasId);
             return View(sesiune);
         }
 
@@ -91,7 +110,7 @@ namespace PokerAdmin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,OrasId,ClubId,JocId,JucatorId")] Sesiune sesiune)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,OrasId,ClubId,JocId,Rezultat,JucatorId")] Sesiune sesiune)
         {
             if (id != sesiune.Id)
             {
@@ -118,7 +137,10 @@ namespace PokerAdmin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ClubId"] = new SelectList(_context.Club, "Id", "Id", sesiune.ClubId);
+            ViewData["JocId"] = new SelectList(_context.Joc, "Id", "Id", sesiune.JocId);
             ViewData["JucatorId"] = new SelectList(_context.Jucator, "Id", "Id", sesiune.JucatorId);
+            ViewData["OrasId"] = new SelectList(_context.Oras, "Id", "Id", sesiune.OrasId);
             return View(sesiune);
         }
 
@@ -131,7 +153,10 @@ namespace PokerAdmin.Controllers
             }
 
             var sesiune = await _context.Sesiune
+                .Include(s => s.Club)
+                .Include(s => s.Joc)
                 .Include(s => s.Jucator)
+                .Include(s => s.Oras)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (sesiune == null)
             {

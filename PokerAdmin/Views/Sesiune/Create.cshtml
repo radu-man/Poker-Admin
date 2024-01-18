@@ -14,22 +14,24 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="OrasId" class="control-label"></label>
-                <input asp-for="OrasId" class="form-control" />
-                <span asp-validation-for="OrasId" class="text-danger"></span>
+                <select asp-for="OrasId" class="form-control" asp-items="ViewBag.OrasId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="ClubId" class="control-label"></label>
-                <input asp-for="ClubId" class="form-control" />
-                <span asp-validation-for="ClubId" class="text-danger"></span>
+                <select asp-for="ClubId" class="form-control" asp-items="ViewBag.ClubId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="JocId" class="control-label"></label>
-                <input asp-for="JocId" class="form-control" />
-                <span asp-validation-for="JocId" class="text-danger"></span>
+                <select asp-for="JocId" class="form-control" asp-items="ViewBag.JocId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rezultat" class="control-label"></label>
+                <input asp-for="Rezultat" class="form-control" />
+                <span asp-validation-for="Rezultat" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="JucatorId" class="control-label"></label>
-                <select asp-for="JucatorId" class ="form-control" asp-items="ViewBag.JucatorId"></select>
+                <select asp-for="JucatorId" class="form-control" asp-items="ViewBag.JucatorId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

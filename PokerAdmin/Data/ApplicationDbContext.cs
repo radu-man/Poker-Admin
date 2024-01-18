@@ -14,5 +14,6 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<PokerAdmin.Models.Club> Club { get; set; } = default!;
     public DbSet<PokerAdmin.Models.Jucator> Jucator { get; set; } = default!;
     public DbSet<PokerAdmin.Models.Sesiune> Sesiune { get; set; } = default!;
+    public DbSet<PokerAdmin.Models.Joc> Joc { get; set; } = default!;
 }
 

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PokerAdmin.Data;
 
@@ -10,9 +11,11 @@ using PokerAdmin.Data;
 namespace PokerAdmin.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240118115125_JucatorSesiuneJoc")]
+    partial class JucatorSesiuneJoc
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.15");
@@ -236,21 +239,6 @@ namespace PokerAdmin.Data.Migrations
                     b.ToTable("Club");
                 });
 
-            modelBuilder.Entity("PokerAdmin.Models.Joc", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Denumire")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Joc");
-                });
-
             modelBuilder.Entity("PokerAdmin.Models.Jucator", b =>
                 {
                     b.Property<int>("Id")
@@ -306,18 +294,9 @@ namespace PokerAdmin.Data.Migrations
                     b.Property<int?>("OrasId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Rezultat")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ClubId");
-
-                    b.HasIndex("JocId");
-
                     b.HasIndex("JucatorId");
-
-                    b.HasIndex("OrasId");
 
                     b.ToTable("Sesiune");
                 });
@@ -384,31 +363,13 @@ namespace PokerAdmin.Data.Migrations
 
             modelBuilder.Entity("PokerAdmin.Models.Sesiune", b =>
                 {
-                    b.HasOne("PokerAdmin.Models.Club", "Club")
-                        .WithMany()
-                        .HasForeignKey("ClubId");
-
-                    b.HasOne("PokerAdmin.Models.Joc", "Joc")
-                        .WithMany()
-                        .HasForeignKey("JocId");
-
                     b.HasOne("PokerAdmin.Models.Jucator", "Jucator")
                         .WithMany("Sesiuni")
                         .HasForeignKey("JucatorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PokerAdmin.Models.Oras", "Oras")
-                        .WithMany()
-                        .HasForeignKey("OrasId");
-
-                    b.Navigation("Club");
-
-                    b.Navigation("Joc");
-
                     b.Navigation("Jucator");
-
-                    b.Navigation("Oras");
                 });
 
             modelBuilder.Entity("PokerAdmin.Models.Jucator", b =>
